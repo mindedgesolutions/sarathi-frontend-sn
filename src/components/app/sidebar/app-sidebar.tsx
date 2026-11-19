@@ -18,19 +18,12 @@ import { images, titles } from '@/constants';
 import { AppTooltip } from '@/components';
 import { useTheme } from '@/components/dark-mode/theme-provider';
 import { cn } from 'cn';
-
-// This is sample data.
-const data = {
-  user: {
-    name: 'Souvik (State)',
-    email: 'souvik_state@test.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
-};
+import { useCurrentUser } from '@/tanstack/auth/auth.query';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open } = useSidebar();
   const { theme } = useTheme();
+  const { data } = useCurrentUser();
 
   return (
     <Sidebar collapsible="icon" {...props}>

@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import { simpleFetch } from '@/axios/simple.fetch';
 import { useLogin } from '@/tanstack/auth/auth.mutation';
 import { showError } from '@/alerts/show.error';
+import { queryClient } from '@/tanstack/query.client';
 
 type CaptchaProps = {
   key: string;
@@ -56,7 +57,7 @@ const AppStakeholderLogin = () => {
   const getCaptcha = async () => {
     const angle = Math.floor(Math.random() * 31) - 15;
     try {
-      const res = await simpleFetch.get(`/auth/captcha`);
+      const res = await simpleFetch.get(`/api/auth/captcha`);
       setCaptcha({
         key: res.data.key,
         image: res.data.image,
@@ -91,11 +92,11 @@ const AppStakeholderLogin = () => {
       captchaKey: captcha?.key || '',
     };
     login.mutate(final, {
-      onSuccess: () => {
+      onSuccess: (user) => {
+        queryClient.setQueryData(['current-user'], user);
         navigate(`/state/dashboard`);
       },
       onError: (error) => {
-        console.log(error);
         if ((error as any).status === 422) {
           Object.entries((error as any)?.response?.data?.errors).forEach(
             ([field, message]) => {

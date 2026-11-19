@@ -1,3 +1,3 @@
 export const school = {
-  masters: `/school/masters`,
+  masters: `/api/school/masters`,
 };

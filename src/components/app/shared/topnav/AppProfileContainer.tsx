@@ -11,13 +11,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { appIcons, images } from '@/constants';
 import { BadgeCheck, LogOut } from 'lucide-react';
+import { useCurrentUser } from '@/tanstack/auth/auth.query';
 
 const AppProfileContainer = () => {
-  const isLoading = false;
-  const user = {
-    name: 'Souvik (State)',
-    email: 'souvik_state@test.com',
-  };
+  const { data, isLoading } = useCurrentUser();
+  const user = data.user;
 
   return (
     <DropdownMenu>

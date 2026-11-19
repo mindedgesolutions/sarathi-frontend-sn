@@ -9,10 +9,21 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        // target: 'http://localhost:8000',
         target: 'http://localhost:8080',
         changeOrigin: true,
         timeout: 60000,
+      },
+      '/sanctum': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+      '/auth/login': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+      '/auth/logout': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
       },
     },
   },

@@ -1,9 +1,20 @@
 import { AppFooter, AppTopnav } from '@/components';
 import { AppSidebar } from '@/components/app/sidebar/app-sidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
-import { Outlet } from 'react-router-dom';
+import { useCurrentUser } from '@/tanstack/auth/auth.query';
+import { Navigate, Outlet } from 'react-router-dom';
 
 const AuthLayout = () => {
+  const { data: user, isLoading, isError } = useCurrentUser();
+
+  if (isLoading) {
+    return <div>Checking authentication...</div>;
+  }
+
+  if (isError || !user) {
+    return <Navigate to={`/auth/stakeholder-signin`} replace />;
+  }
+
   return (
     <>
       <SidebarProvider>

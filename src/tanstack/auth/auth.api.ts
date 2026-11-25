@@ -8,7 +8,7 @@ export const login = async (data: any) => {
 
   const res = await simpleFetch.get(auth.currentUser);
 
-  return res.data;
+  return res.data.data;
 };
 
 // ---------------
@@ -16,7 +16,7 @@ export const login = async (data: any) => {
 export const currentUser = async (signal: AbortSignal) => {
   const res = await simpleFetch.get(auth.currentUser, { signal });
 
-  return res.data;
+  return res.data.data;
 };
 
 // ---------------

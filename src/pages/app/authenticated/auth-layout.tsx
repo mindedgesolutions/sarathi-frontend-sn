@@ -1,4 +1,4 @@
-import { AppFooter, AppTopnav } from '@/components';
+import { AppCheckAuthSkeleton, AppFooter, AppTopnav } from '@/components';
 import { AppSidebar } from '@/components/app/sidebar/app-sidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { useCurrentUser } from '@/tanstack/auth/auth.query';
@@ -8,7 +8,7 @@ const AuthLayout = () => {
   const { data: user, isLoading, isError } = useCurrentUser();
 
   if (isLoading) {
-    return <div>Checking authentication...</div>;
+    return <AppCheckAuthSkeleton />;
   }
 
   if (isError || !user) {

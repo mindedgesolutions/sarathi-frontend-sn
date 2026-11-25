@@ -25,3 +25,4 @@ export { default as AppDonut } from '@/components/app/shared/charts/AppDonut';
 export { default as AppBarchart } from '@/components/app/shared/charts/AppBarchart';
 export { default as AppPiechart } from '@/components/app/shared/charts/AppPiechart';
 export { default as AppFormSkeleton } from '@/components/app/shared/AppFormSkeleton';
+export { default as AppCheckAuthSkeleton } from '@/components/app/shared/AppCheckAuthSkeleton';

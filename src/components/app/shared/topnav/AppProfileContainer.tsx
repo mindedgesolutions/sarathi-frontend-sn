@@ -12,10 +12,20 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { appIcons, images } from '@/constants';
 import { BadgeCheck, LogOut } from 'lucide-react';
 import { useCurrentUser } from '@/tanstack/auth/auth.query';
+import { useLogout } from '@/tanstack/auth/auth.mutation';
 
 const AppProfileContainer = () => {
   const { data, isLoading } = useCurrentUser();
-  const user = data.user;
+  const logout = useLogout();
+  const user = data;
+
+  const handleLogout = async () => {
+    logout.mutate(undefined, {
+      onSuccess: () => {
+        window.dispatchEvent(new Event('auth:logout'));
+      },
+    });
+  };
 
   return (
     <DropdownMenu>
@@ -63,7 +73,10 @@ const AppProfileContainer = () => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem className="text-xs cursor-pointer">
+          <DropdownMenuItem
+            className="text-xs cursor-pointer"
+            onClick={handleLogout}
+          >
             <LogOut className="size-3.5" />
             Log out
           </DropdownMenuItem>

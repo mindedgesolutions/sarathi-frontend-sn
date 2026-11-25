@@ -11,48 +11,57 @@ import {
   stateRoutes,
   supplierRoutes,
 } from './routes/authenticated.route';
+import { loader as guestLoader } from './loaders/auth.loader';
+import { queryClient } from './tanstack/query.client';
+import AppRouterLayout from './components/app/shared/auth/AppRouterLayout';
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <pg.WbLayout />,
-    children: [...websiteRoutes],
-  },
-  {
-    path: 'auth',
-    children: [...authRoutes],
-  },
-  {
-    path: '/',
-    element: <pg.AuthLayout />,
+    element: <AppRouterLayout />,
     children: [
       {
-        path: 'block',
-        children: [...blockRoutes],
+        path: '/',
+        element: <pg.WbLayout />,
+        children: [...websiteRoutes],
       },
       {
-        path: 'circle',
-        children: [...circleRoutes],
+        path: 'auth',
+        loader: guestLoader(queryClient),
+        children: [...authRoutes],
       },
       {
-        path: 'cms',
-        children: [...cmsRoutes],
-      },
-      {
-        path: 'district',
-        children: [...districtRoutes],
-      },
-      {
-        path: 'school',
-        children: [...schoolRoutes],
-      },
-      {
-        path: 'state',
-        children: [...stateRoutes],
-      },
-      {
-        path: 'supplier',
-        children: [...supplierRoutes],
+        path: '/',
+        element: <pg.AuthLayout />,
+        children: [
+          {
+            path: 'block',
+            children: [...blockRoutes],
+          },
+          {
+            path: 'circle',
+            children: [...circleRoutes],
+          },
+          {
+            path: 'cms',
+            children: [...cmsRoutes],
+          },
+          {
+            path: 'district',
+            children: [...districtRoutes],
+          },
+          {
+            path: 'school',
+            children: [...schoolRoutes],
+          },
+          {
+            path: 'state',
+            children: [...stateRoutes],
+          },
+          {
+            path: 'supplier',
+            children: [...supplierRoutes],
+          },
+        ],
       },
     ],
   },

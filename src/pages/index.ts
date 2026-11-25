@@ -16,6 +16,7 @@ export { default as AppResetPassword } from '@/pages/app/auth/reset-password';
 
 // app authenticated pages ----------
 export { default as AuthLayout } from '@/pages/app/authenticated/auth-layout';
+export { default as AppGuestLayout } from '@/pages/app/authenticated/guest-layout';
 export { default as AppBlockDashboard } from '@/pages/app/authenticated/block/dashboard';
 export { default as AppCircleDashboard } from '@/pages/app/authenticated/circle/dashboard';
 export { default as AppCmsDashboard } from '@/pages/app/authenticated/cms/dashboard';

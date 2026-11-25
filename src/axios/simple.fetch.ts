@@ -15,18 +15,12 @@ simpleFetch.interceptors.response.use(
   (response) => response,
 
   (error) => {
-    // Ignore intentional request cancellation
-    if (axios.isCancel(error) || error.code === 'ERR_CANCELED') {
-      return Promise.reject(error);
-    }
-
     const status = error.response?.status;
-    const url = error.config?.url || '';
+    const url = error.config?.url?.split('?')[0];
 
-    // Don't treat incorrect login credentials as expired sessions
-    const isLoginRequest = url.includes('/auth/stakeholder-signin');
+    const excludedRoutes = ['/auth/login', '/api/auth/current-user'];
 
-    if (status === 401 && !isLoginRequest) {
+    if (status === 401 && !excludedRoutes.includes(url)) {
       window.dispatchEvent(new Event('auth:unauthorized'));
     }
 

@@ -1,5 +1,6 @@
 import { auth } from '@/api/auth.api';
 import { simpleFetch } from '@/axios/simple.fetch';
+import axios from 'axios';
 
 export const login = async (data: any) => {
   await simpleFetch.get(auth.sanctum);
@@ -14,9 +15,19 @@ export const login = async (data: any) => {
 // ---------------
 
 export const currentUser = async (signal: AbortSignal) => {
-  const res = await simpleFetch.get(auth.currentUser, { signal });
+  try {
+    const res = await simpleFetch.get(auth.currentUser, {
+      signal,
+    });
 
-  return res.data.data;
+    return res.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      return null;
+    }
+
+    throw error;
+  }
 };
 
 // ---------------

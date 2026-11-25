@@ -1,5 +1,5 @@
 export const auth = {
-  captcha: `/auth/captcha`,
+  captcha: `/api/auth/captcha`,
   sanctum: `/sanctum/csrf-cookie`,
   login: `/auth/login`,
   logout: `/auth/logout`,

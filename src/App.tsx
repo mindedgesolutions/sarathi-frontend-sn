@@ -11,8 +11,6 @@ import {
   stateRoutes,
   supplierRoutes,
 } from './routes/authenticated.route';
-import { loader as guestLoader } from './loaders/auth.loader';
-import { queryClient } from './tanstack/query.client';
 import AppRouterLayout from './components/app/shared/auth/AppRouterLayout';
 
 const router = createBrowserRouter([
@@ -26,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'auth',
-        loader: guestLoader(queryClient),
+        element: <pg.AppGuestLayout />,
         children: [...authRoutes],
       },
       {

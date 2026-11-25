@@ -107,6 +107,14 @@ const AppStakeholderLogin = () => {
           );
           return;
         }
+
+        if (
+          (error as any)?.response?.data?.errors?.[0] === 'Captcha is incorrect'
+        ) {
+          form.setValue('captcha', '');
+          getCaptcha();
+        }
+
         const msg =
           (error as any)?.response?.data?.errors?.[0] ||
           (error as any)?.response?.data?.message ||
@@ -124,7 +132,7 @@ const AppStakeholderLogin = () => {
       className="relative min-h-svh bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: "url('/ys-signin.jpg')" }}
     >
-      {/* Black overlay */}{' '}
+      {/* Black overlay */}
       <div className="absolute inset-0 bg-card-foreground/50 dark:bg-card/50" />
       {/* Page content */}
       <div className="relative z-10 flex min-h-svh items-center">

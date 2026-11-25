@@ -9,42 +9,42 @@ const AppAuthListener = () => {
   useEffect(() => {
     const channel = new BroadcastChannel('auth-channel');
 
-    let handled = false;
+    const signOut = async (broadcast: boolean) => {
+      // Cancel pending queries
+      await queryClient.cancelQueries();
 
-    const signOut = (broadcast: boolean) => {
-      if (handled) return;
+      // Explicitly mark the user as unauthenticated
+      queryClient.setQueryData(['current-user'], null);
 
-      handled = true;
+      // Remove inactive cached data
+      queryClient.removeQueries({
+        type: 'inactive',
+        predicate: (query) => query.queryKey[0] !== 'current-user',
+      });
 
-      // Clear all cached queries and mutations
-      queryClient.clear();
-
-      // Notify other tabs if needed
+      // Notify other tabs
       if (broadcast) {
-        channel.postMessage({
-          type: 'LOGOUT',
-        });
+        channel.postMessage({ type: 'LOGOUT' });
       }
 
+      // Redirect to sign-in
       navigate('/auth/stakeholder-signin', {
         replace: true,
       });
     };
 
-    // Session expired / unauthorized API response
     const handleUnauthorized = () => {
-      signOut(true);
+      void signOut(true);
     };
 
-    // Manual logout in this tab
     const handleLogout = () => {
-      signOut(true);
+      console.log('Logout event received');
+      void signOut(true);
     };
 
-    // Logout from another tab
     const handleCrossTabLogout = (event: MessageEvent) => {
       if (event.data?.type === 'LOGOUT') {
-        signOut(false);
+        void signOut(false);
       }
     };
 

@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import AppAuthListener from './AppAuthListener';
+import AppAuthListener from './auth-listener';
 
 const AppRouterLayout = () => {
   return (

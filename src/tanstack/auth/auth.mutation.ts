@@ -13,6 +13,7 @@ export const useLogin = () => {
 
 export const useLogout = () => {
   return useMutation({
+    mutationKey: ['auth', 'logout'],
     mutationFn: logout,
     onSuccess: () => {},
     onError: () => {},

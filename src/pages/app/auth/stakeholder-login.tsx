@@ -91,7 +91,7 @@ const AppStakeholderLogin = () => {
       password: btoa(data.password),
       captchaKey: captcha?.key || '',
     };
-    login.mutate(final, {
+    await login.mutateAsync(final, {
       onSuccess: (user) => {
         queryClient.setQueryData(['current-user'], user);
         navigate(`/state/dashboard`);
@@ -111,6 +111,7 @@ const AppStakeholderLogin = () => {
         if (
           (error as any)?.response?.data?.errors?.[0] === 'Captcha is incorrect'
         ) {
+          form.setFocus('captcha');
           form.setValue('captcha', '');
           getCaptcha();
         }

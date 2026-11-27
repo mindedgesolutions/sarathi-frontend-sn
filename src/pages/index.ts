@@ -13,6 +13,7 @@ export { default as AppStakeholderLogin } from '@/pages/app/auth/stakeholder-log
 export { default as AppCmsLogin } from '@/pages/app/auth/cms-login';
 export { default as AppForgotPassword } from '@/pages/app/auth/forgot-password';
 export { default as AppResetPassword } from '@/pages/app/auth/reset-password';
+export { default as AppRouterLayout } from '@/pages/app/auth/auth-router-layout';
 
 // app authenticated pages ----------
 export { default as AuthLayout } from '@/pages/app/authenticated/auth-layout';

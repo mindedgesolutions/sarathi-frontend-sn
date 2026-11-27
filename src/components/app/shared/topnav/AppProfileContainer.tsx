@@ -20,11 +20,9 @@ const AppProfileContainer = () => {
   const user = data;
 
   const handleLogout = async () => {
-    logout.mutate(undefined, {
+    await logout.mutateAsync(undefined, {
       onSuccess: () => {
-        console.log('Logout API successful');
         window.dispatchEvent(new Event('auth:logout'));
-        console.log('Logout event dispatched');
       },
       onError: (error) => {
         console.error('Logout API failed:', error);

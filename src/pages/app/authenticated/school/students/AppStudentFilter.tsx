@@ -14,7 +14,7 @@ import type {
   IApplicationStatus,
   ICategory,
   IGender,
-} from '@/interface/school.interface';
+} from '@/interface/masters.interface';
 import type { StudentSearchSchema } from '@/schema/search.schema';
 import {
   useApplicationStatus,

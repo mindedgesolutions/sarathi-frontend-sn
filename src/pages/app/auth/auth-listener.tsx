@@ -38,7 +38,6 @@ const AppAuthListener = () => {
     };
 
     const handleLogout = () => {
-      console.log('Logout event received');
       void signOut(true);
     };
 

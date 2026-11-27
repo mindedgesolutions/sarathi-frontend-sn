@@ -11,11 +11,10 @@ import {
   stateRoutes,
   supplierRoutes,
 } from './routes/authenticated.route';
-import AppRouterLayout from './components/app/shared/auth/AppRouterLayout';
 
 const router = createBrowserRouter([
   {
-    element: <AppRouterLayout />,
+    element: <pg.AppRouterLayout />,
     children: [
       {
         path: '/',

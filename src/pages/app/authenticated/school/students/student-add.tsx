@@ -8,7 +8,10 @@ import {
   FormDatepicker,
   FormRequired,
   AppSectionTitleWrapper,
+  SubmitBtn,
+  AppFieldSkeleton,
 } from '@/components';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { titles } from '@/constants';
 import type { IBlock, IDistrict } from '@/interface/masters.interface';
@@ -25,6 +28,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { subYears } from 'date-fns';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 
 const AppStudentAdd = () => {
   document.title = `Add Student | ${titles.appTitle}`;
@@ -104,14 +108,46 @@ const AppStudentAdd = () => {
 
   const blockAll = formatDropdownOptions(blocks, 'block_id_pk', 'block_name');
 
+  // -----------------------
+
+  const reset = () => {
+    form.reset({
+      name: '',
+      guardianName: '',
+      relationship: '',
+      dob: null,
+      gender: '',
+      caste: '',
+      religion: '',
+      board: '',
+      classMaster: 'IX',
+      section: '',
+      rollNo: '',
+      registrationNo: '',
+      localityRoad: '',
+      cityTown: '',
+      postOffice: '',
+      district: '',
+      block: '',
+      policeStation: '',
+      pincode: '',
+    });
+  };
+
+  // -----------------------
+
+  const handleSubmit = async (data: StudentSchemaOutput) => {
+    console.log(data);
+  };
+
   return (
     <AppPageWrapper>
       <AppTitleWrapper title="Add new student" />
       <AppSectionWrapper>
-        {masterLoading || districtLoading || blockLoading ? (
+        {masterLoading || districtLoading ? (
           <AppFormSkeleton count={20} gridCol={4} />
         ) : (
-          <form>
+          <form onSubmit={form.handleSubmit(handleSubmit)}>
             <fieldset disabled={isSubmitting}>
               <AppSectionTitleWrapper
                 title="Applicant details"
@@ -273,7 +309,7 @@ const AppStudentAdd = () => {
                 backgroundClassName="bg-muted rounded-xs my-4"
               />
               <div className="grid grid-cols-1 md:grid-cols-4 gap-x-4 gap-y-4">
-                <div className="col-span-2 grid content-start gap-1">
+                <div className="col-span-1 md:col-span-2 grid content-start gap-1">
                   <Label htmlFor="localityRoad" className="mb-1">
                     Premises no. & Locality / Road
                   </Label>
@@ -326,14 +362,18 @@ const AppStudentAdd = () => {
                   <Label htmlFor="block" className="mb-1">
                     Select block <FormRequired />
                   </Label>
-                  <FormSelect
-                    control={form.control}
-                    name="block"
-                    options={blockAll}
-                    placeholder="Select a block"
-                    description={errors.block?.message}
-                    disabled={isSubmitting}
-                  />
+                  {blockLoading ? (
+                    <AppFieldSkeleton className="h-8" />
+                  ) : (
+                    <FormSelect
+                      control={form.control}
+                      name="block"
+                      options={blockAll}
+                      placeholder="Select a block"
+                      description={errors.block?.message}
+                      disabled={isSubmitting}
+                    />
+                  )}
                 </div>
                 <div className="grid content-start gap-1">
                   <Label htmlFor="policeStation" className="mb-1">
@@ -358,6 +398,23 @@ const AppStudentAdd = () => {
                     errorMsg={errors.pincode?.message}
                     placeholder={`Enter PIN code`}
                   />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 mt-8 gap-x-4 gap-y-4">
+                <div className="flex gap-4 justify-center md:justify-end">
+                  <SubmitBtn
+                    isSubmitting={isSubmitting}
+                    label="Add Student"
+                    submitLabel="Submitting ..."
+                  />
+                  <Button variant={'outline'} type="button" onClick={reset}>
+                    Reset Filters
+                  </Button>
+                  <Link to={`/school/students`}>
+                    <Button variant={'outline'} type="button">
+                      Back to List
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </fieldset>
